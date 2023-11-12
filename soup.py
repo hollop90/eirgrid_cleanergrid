@@ -1,33 +1,38 @@
-# import matplotlib
 import requests
 import json
+import pandas
+import datetime
+
+"""
+@brief Returns the demand for a specified time range
+@param range Time range [day, week, month, custom]
+"""
+def demand(*, range=None, date_from=None, date_to=None):
+    range_start = None
+    range_end = None
+
+    if date_from is None and date_to is None:
+        date_to = datetime.date.today()
+        date_from = date_to - datetime.timedelta(days=range)
+    else:
+        date_to = datetime.date.fromisoformat(date_to)
+        date_from = datetime.date.fromisoformat(date_from)
 
 
-print("EIRGRID CLEANERGRID")
+    range_start = date_from.strftime("%d-%b-%Y")
+    range_end = date_to.strftime("%d-%b-%Y")
 
-# response = requests.get("https://www.smartgriddashboard.com/DashboardService.svc/data?area=demandactual&region=ALL&datefrom=11-Nov-2023+00%3A00&dateto=11-Nov-2023+23%3A59")
+    print(range_start)
+    print(range_end)
 
-payload = [("area", "demandactual"), ("region", "ALL"), ("datefrom", "11-Nov-2023 00:00"), ("dateto", "11-Nov-2023 23:59")]
-response = requests.get(
-        "https://www.smartgriddashboard.com/DashboardService.svc/data",
-        params=payload
-    )
-
-print(response.url)
-
-if response:
-    print(response)
-    print(response.json())
-    with open("temp.json", "w+") as file:
-        file.write(json.dumps(response.json()))
-else:
-    print("REQUEST FAILED")
-
-# DATA WE ARE INTERESTED IN
-# - Demand for the month
-# - Fuel mix for the:
-#   - day
-#   - week
-#   - month
-# - Wind generation for the month
-# - Wind generation forecast
+    payload = [
+        ("area", "demandactual"),
+        ("region", "ALL"),
+        ("datefrom", f"{range_start} 00:00"),
+        ("dateto", f"{range_end} 23:59")
+    ]
+    response = requests.get("https://www.smartgriddashboard.com/DashboardService.svc/data", params=payload)
+    if response:
+        return response.json()
+    else:
+        return None
