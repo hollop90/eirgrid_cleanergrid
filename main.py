@@ -29,6 +29,15 @@ Uncomment for wind gen plot
 # ax.plot(vals)
 # plt.show()
 
+"""
+Uncomment for wind forecast plot
+"""
+# x = soup.wind_forecast(range=30)
+# vals = [x["Rows"][i]["Value"] for i in range(len(x["Rows"]))] # List comprehension
+# fig, ax = plt.subplots()
+# ax.plot(vals)
+# plt.show()
+
 # DATA WE ARE INTERESTED IN
 # - Demand for the month
 # - Fuel mix for the:
