@@ -3,10 +3,7 @@ import json
 import pandas
 import datetime
 
-"""
-@brief Returns the demand for a specified time range
-@param range Time range [day, week, month, custom]
-"""
+endpoint = "https://www.smartgriddashboard.com/DashboardService.svc/data"
 def demand(*, range=None, date_from=None, date_to=None):
     range_start = None
     range_end = None
@@ -27,7 +24,7 @@ def demand(*, range=None, date_from=None, date_to=None):
         ("datefrom", f"{range_start} 00:00"),
         ("dateto", f"{range_end} 23:59")
     ]
-    response = requests.get("https://www.smartgriddashboard.com/DashboardService.svc/data", params=payload)
+    response = requests.get(endpoint, params=payload)
     if response:
         return response.json()
     else:
@@ -54,7 +51,7 @@ def mixture(*, range=None, date_from=None, date_to=None):
         ("dateto", f"{range_start} 23:59")
     ]
 
-    response = requests.get("https://www.smartgriddashboard.com/DashboardService.svc/data", params=payload)
+    response = requests.get(endpoint, params=payload)
     if response:
         return response.json()
     else:
@@ -80,7 +77,7 @@ def wind(*, range=None, date_from=None, date_to=None):
         ("datefrom", f"{range_start} 00:00"),
         ("dateto", f"{range_end} 23:59")
     ]
-    response = requests.get("https://www.smartgriddashboard.com/DashboardService.svc/data", params=payload)
+    response = requests.get(endpoint, params=payload)
     if response:
         return response.json()
     else:
@@ -106,7 +103,7 @@ def wind_forecast(*, range=None, date_from=None, date_to=None):
         ("datefrom", f"{range_start} 00:00"),
         ("dateto", f"{range_end} 23:59")
     ]
-    response = requests.get("https://www.smartgriddashboard.com/DashboardService.svc/data", params=payload)
+    response = requests.get(endpoint, params=payload)
     if response:
         return response.json()
     else:
