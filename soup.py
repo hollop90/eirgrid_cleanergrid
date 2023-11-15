@@ -26,7 +26,6 @@ def demand(*, date_range=None, date_from=None, date_to=None):
     ]
     response = requests.get(endpoint, params=payload)
     if response:
-        # List comprehension
         data = response.json()
         rows = [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))]
         dict = {
@@ -92,7 +91,12 @@ def wind(*, date_range=None, date_from=None, date_to=None):
     ]
     response = requests.get(endpoint, params=payload)
     if response:
-        return response.json()
+        data = response.json()
+        rows = [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))]
+        dict = {
+            "Wind" : rows
+        }
+        return pd.DataFrame(dict)
     else:
         return None
 
@@ -118,6 +122,11 @@ def wind_forecast(*, date_range=None, date_from=None, date_to=None):
     ]
     response = requests.get(endpoint, params=payload)
     if response:
-        return response.json()
+        data = response.json()
+        rows = [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))]
+        dict = {
+            "Forecast" : rows
+        }
+        return pd.DataFrame(dict)
     else:
         return None
