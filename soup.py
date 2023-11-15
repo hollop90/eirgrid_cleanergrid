@@ -1,16 +1,16 @@
 import requests
 import json
-import pandas
+import pandas as pd
 import datetime
 
 endpoint = "https://www.smartgriddashboard.com/DashboardService.svc/data"
-def demand(*, range=None, date_from=None, date_to=None):
+def demand(*, date_range=None, date_from=None, date_to=None):
     range_start = None
     range_end = None
 
     if date_from is None and date_to is None:
         date_to = datetime.date.today()
-        date_from = date_to - datetime.timedelta(days=range)
+        date_from = date_to - datetime.timedelta(days=date_range)
     else:
         date_to = datetime.date.fromisoformat(date_to)
         date_from = datetime.date.fromisoformat(date_from)
@@ -26,17 +26,24 @@ def demand(*, range=None, date_from=None, date_to=None):
     ]
     response = requests.get(endpoint, params=payload)
     if response:
-        return response.json()
+        # List comprehension
+        data = response.json()
+        rows = [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))]
+        dict = {
+            "Demand" : rows
+        }
+        demand = pd.DataFrame(dict)
+        return demand
     else:
         return None
 
-def mixture(*, range=None, date_from=None, date_to=None):
+def mixture(*, date_range=None, date_from=None, date_to=None):
     range_start = None
     range_end = None
 
     if date_from is None and date_to is None:
         date_to = datetime.date.today()
-        date_from = date_to - datetime.timedelta(days=range)
+        date_from = date_to - datetime.timedelta(days=date_range)
     else:
         date_to = datetime.date.fromisoformat(date_to)
         date_from = datetime.date.fromisoformat(date_from)
@@ -53,17 +60,23 @@ def mixture(*, range=None, date_from=None, date_to=None):
 
     response = requests.get(endpoint, params=payload)
     if response:
-        return response.json()
+        # List comprehension
+        data = response.json()
+        rows = [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))]
+        dict = {
+            "Mixture" : rows
+        }
+        return pd.DataFrame(dict)
     else:
         return None
 
-def wind(*, range=None, date_from=None, date_to=None):
+def wind(*, date_range=None, date_from=None, date_to=None):
     range_start = None
     range_end = None
 
     if date_from is None and date_to is None:
         date_to = datetime.date.today()
-        date_from = date_to - datetime.timedelta(days=range)
+        date_from = date_to - datetime.timedelta(days=date_range)
     else:
         date_to = datetime.date.fromisoformat(date_to)
         date_from = datetime.date.fromisoformat(date_from)
@@ -83,13 +96,13 @@ def wind(*, range=None, date_from=None, date_to=None):
     else:
         return None
 
-def wind_forecast(*, range=None, date_from=None, date_to=None):
+def wind_forecast(*, date_range=None, date_from=None, date_to=None):
     range_start = None
     range_end = None
 
     if date_from is None and date_to is None:
         date_to = datetime.date.today()
-        date_from = date_to - datetime.timedelta(days=range)
+        date_from = date_to - datetime.timedelta(days=date_range)
     else:
         date_to = datetime.date.fromisoformat(date_to)
         date_from = datetime.date.fromisoformat(date_from)

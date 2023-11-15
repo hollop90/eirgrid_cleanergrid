@@ -5,11 +5,11 @@ import soup
 """
 Uncomment for demand plot
 """
-# x = soup.demand(range=30)
-# vals = [x["Rows"][i]["Value"] for i in range(len(x["Rows"]))] # List comprehension
-# fig, ax = plt.subplots()
-# ax.plot(vals)
-# plt.show()
+x = soup.demand(date_range=3)
+print(x)
+fig, ax = plt.subplots()
+ax.plot(x["Demand"])
+plt.show()
 
 """
 Uncomment for mixture plot
