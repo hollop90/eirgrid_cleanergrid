@@ -39,6 +39,18 @@ def demand(*, date_range=None, date_from=None, date_to=None):
     else:
         return None
 
+def demand_forecast(*, date_range=None, date_from=None, date_to=None):
+    response = query_dashbaord("demandforecast", date_range, date_from, date_to)
+
+    if response:
+        data = response.json()
+        return pd.DataFrame({
+            "Time" : [data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))],
+            "Demand Forecast" : [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))],
+        })
+    else:
+        return None
+
 def mixture(*, date_range=None, date_from=None, date_to=None):
     response = query_dashbaord("fuelmix", date_range, date_from, date_to)
 
