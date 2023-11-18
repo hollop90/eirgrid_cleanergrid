@@ -39,7 +39,7 @@ def demand(*, date_range=None, date_from=None, date_to=None):
     else:
         return None
     
-    def demand_forecast(*, date_range=None, date_from=None, date_to=None):
+def demand_forecast(*, date_range=None, date_from=None, date_to=None):
     response = query_dashbaord("demandforecast", date_range, date_from, date_to)
 
     if response:
@@ -51,8 +51,8 @@ def demand(*, date_range=None, date_from=None, date_to=None):
     else:
         return None
     
-    demand_act = demand(date_range=30, date_from=None, date_to=None)
-    demand_for = demand_forecast(date_range=3, date_from=None, date_to=None)
+demand_act = demand(date_range=30, date_from=None, date_to=None)
+demand_for = demand_forecast(date_range=3, date_from=None, date_to=None)
     
-    data_frame = pd.merge(dem_act, dem_for, on="Time", how="outer")
-    print(data_frame)
+data_frame = pd.merge(dem_act, dem_for, on="Time", how="outer")
+print(data_frame)
