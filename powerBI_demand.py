@@ -51,8 +51,8 @@ def demand_forecast(*, date_range=None, date_from=None, date_to=None):
     else:
         return None
     
-demand_act = demand(date_range=30, date_from=None, date_to=None)
-demand_for = demand_forecast(date_range=3, date_from=None, date_to=None)
+dem_act = demand(date_range=30, date_from=None, date_to=None)
+dem_for = demand_forecast(date_range=3, date_from=None, date_to=None)
     
 data_frame = pd.merge(dem_act, dem_for, on="Time", how="outer")
 print(data_frame)
