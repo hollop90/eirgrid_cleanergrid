@@ -54,5 +54,5 @@ def wind_forecast(*, date_range=None, date_from=None, date_to=None):
 wind_act = wind(date_range=3, date_from=None, date_to=None)
 wind_for = wind_forecast(date_range=3, date_from=None, date_to=None)
 
-wind_all = pd.merge(wind_act, wind_for, on="Time", how="outer")
-print(wind_all)
+data_frame = pd.merge(wind_act, wind_for, on="Time", how="outer")
+print(data_frame)
