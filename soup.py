@@ -3,6 +3,11 @@ import json
 import pandas as pd
 import datetime
 
+# yolo
+"""
+Functions for querying the eirgrid dashboard
+"""
+
 def query_dashbaord(area, date_range, date_from, date_to):
     range_start = None
     range_end = None
@@ -27,6 +32,15 @@ def query_dashbaord(area, date_range, date_from, date_to):
     endpoint = "https://www.smartgriddashboard.com/DashboardService.svc/data"
     return requests.get(endpoint, params=payload)
 
+"""
+Retruns the actual demand
+
+:param date_range: Past few days
+:param date_from: Date range to start from
+:param date_from: Date range to end at
+
+:return: A dataframe containing the demand
+"""
 def demand(*, date_range=None, date_from=None, date_to=None):
     response = query_dashbaord("demandactual", date_range, date_from, date_to)
 
