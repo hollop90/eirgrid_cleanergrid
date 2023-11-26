@@ -3,103 +3,76 @@ import csv
 import json
 import pandas as pd
 
-def day_ahead():
+def query_semopx(resource_name):
+    """
+    Query the SEMOpx API for a specific resource
+
+    :param resource_name: The name of the resource to query for
+    :return: A dictionary containing the json response or None if the request failed
+    :rtype: dict
+    """
     payload = {
         "DPuG_ID": "EA-001",
         "order_by":	"DESC",
         "sort_by": "Date",
         "ExcludeDelayedPublication": "0",
-        "ResourceName": "MarketResult_SEM-DA_PWR-MRC-D",
+        "ResourceName": resource_name,
     }
     response = requests.get("https://reports.sem-o.com/api/v1/documents/static-reports", params=payload)
 
     if response:
-        # print("OK")
-        id = response.json()["items"][0]["_id"]
-        # print(f"_id: {id}")
+        return response.json()
+    else:
+        return None
 
-        payload = {
-            "IST": "1",
-        }
-        response = requests.get(f"https://reports.sem-o.com/api/v1/documents/{id}", params=payload)
+def day_ahead():
+    """
+    Returns a datafram containing the day ahead prices
 
-        prices = response.json()["rows"][0][3]
-        return pd.DataFrame({ "Prices" : prices })
+    :return: DataFrame containing the day ahead prices
+    :rtype: pandas.DataFrame
+    """
+    data = query_semopx("MarketResult_SEM-DA_PWR-MRC-D")
+    if data is not None:
+        id = data["items"][0]["_id"]
+
+        payload = {"IST": "1"}
+        document = requests.get(f"https://reports.sem-o.com/api/v1/documents/{id}", params=payload).json()
+
+        return pd.DataFrame({
+            "Timestamp" : pd.to_datetime(document["rows"][0][2]),
+            "Prices" : document["rows"][0][3],
+        })
     else:
         return []
 
-def interday_auction_1():
-    payload = {
-    	"DPuG_ID": "EA-001",
-    	"order_by": "DESC",
-    	"sort_by": "Date",
-    	"ExcludeDelayedPublication": "0",
-    	"ResourceName": "MarketResult_SEM-IDA1_PWR-SEM-GB-D"
-    }
+def interday_auction(auction_number):
+    """
+    Returns a datafram containing the interday auction 1, 2, or 3
 
-    response = requests.get("https://reports.sem-o.com/api/v1/documents/static-reports", params=payload)
+    :param auction_number: The desired interday auction
+    :type auction_number: int
+    :return: A datafram containing the interday auction prices
+    :rtype: pandas.DataFrame
+    """
+    ida = ["MarketResult_SEM-IDA1_PWR-SEM-GB-D", "MarketResult_SEM-IDA2_PWR-SEM-GB-D", "MarketResult_SEM-IDA3_PWR-SEM-D_"]
 
-    if response:
-        id = response.json()["items"][0]["_id"]
+    data = query_semopx(ida[auction_number - 1])
+    if data is not None:
+        id = data["items"][0]["_id"]
 
-        payload = {
-            "IST": "1",
-        }
-        response = requests.get(f"https://reports.sem-o.com/api/v1/documents/{id}", params=payload)
+        payload = {"IST": "1"}
+        document = requests.get(f"https://reports.sem-o.com/api/v1/documents/{id}", params=payload).json()
 
-        prices = response.json()["rows"][0][3]
-        return pd.DataFrame({ "Prices" : prices })
+        return pd.DataFrame({
+            "Timestamp" : pd.to_datetime(document["rows"][0][2]),
+            "Prices" : document["rows"][0][3],
+        })
     else:
         return []
 
-def interday_auction_2():
-    payload = {
-    	"DPuG_ID": "EA-001",
-    	"order_by": "DESC",
-    	"sort_by": "Date",
-    	"ExcludeDelayedPublication": "0",
-    	"ResourceName": "MarketResult_SEM-IDA2_PWR-SEM-GB-D"
-    }
-
-    response = requests.get("https://reports.sem-o.com/api/v1/documents/static-reports", params=payload)
-
-    if response:
-        id = response.json()["items"][0]["_id"]
-
-        payload = {
-            "IST": "1",
-        }
-        response = requests.get(f"https://reports.sem-o.com/api/v1/documents/{id}", params=payload)
-
-        prices = response.json()["rows"][0][3]
-        return pd.DataFrame({ "Prices" : prices })
-    else:
-        return []
-
-def interday_auction_3():
-    payload = {
-    	"DPuG_ID": "EA-001",
-    	"order_by": "DESC",
-    	"sort_by": "Date",
-    	"ExcludeDelayedPublication": "0",
-    	"ResourceName": "MarketResult_SEM-IDA3_PWR-SEM-D_"
-    }
-
-    response = requests.get("https://reports.sem-o.com/api/v1/documents/static-reports", params=payload)
-
-    if response:
-        id = response.json()["items"][0]["_id"]
-
-        payload = {
-            "IST": "1",
-        }
-        response = requests.get(f"https://reports.sem-o.com/api/v1/documents/{id}", params=payload)
-
-        prices = response.json()["rows"][0][3]
-        return pd.DataFrame({ "Prices" : prices })
-    else:
-        return []
-
-print(interday_auction_1())
-print(interday_auction_2())
-print(interday_auction_3())
+if __name__ == "__main__":
+    print(day_ahead())
+    print(interday_auction(1))
+    print(interday_auction(2))
+    print(interday_auction(3))
