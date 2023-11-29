@@ -42,8 +42,8 @@ def dashboard_data(*, data_field, date_range=None, date_from=None, date_to=None)
         data = response.json()
         # Every response contains a timestamp and a value
         return pd.DataFrame({
-            "DateTime" : pd.to_datetime([data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))]),
-            data_field : [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))],
+            "DateTime" : pd.to_datetime([field["EffectiveTime"] for field in data["Rows"]]),
+            data_field : [[field]["Value"] for field in data["Rows"]],
         })
     else:
         return None
@@ -58,9 +58,9 @@ def mixture(*, date_range=None, date_from=None, date_to=None):
         data = response.json()
         # This dataframe contains the timestamp, the source of the energy and the amount of energy from that source
         return  pd.DataFrame({
-            "Time" : [data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))],
-            "Source" : [data["Rows"][i]["FieldName"] for i in range(len(data["Rows"]))],
-            "Mixture" : [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))],
+            "Time" : [field["EffectiveTime"] for field in data["Rows"]],
+            "Source" : [field["FieldName"] for field in data["Rows"]],
+            "Mixture" : [field["Value"] for field in data["Rows"]],
         })
     else:
         return None
