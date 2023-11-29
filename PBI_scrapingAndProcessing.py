@@ -7,7 +7,10 @@ import datetime
 def query_dashbaord(area, date_range, date_from, date_to):
     range_start = None
     range_end = None
+    endpoint = "https://www.smartgriddashboard.com/DashboardService.svc/data"
 
+    # If a specific date range is not provided, use the date 3 days ago and the
+    # date 2 days from now as the range
     if date_from is None and date_to is None:
         date_to = datetime.date.today() + datetime.timedelta(days=2)
         date_from = date_to - datetime.timedelta(days=date_range)
@@ -15,9 +18,11 @@ def query_dashbaord(area, date_range, date_from, date_to):
         date_to = datetime.date.fromisoformat(date_to)
         date_from = datetime.date.fromisoformat(date_from)
 
+    # Format the date to work with the dashboard's API
     range_start = date_from.strftime("%d-%b-%Y")
     range_end = date_to.strftime("%d-%b-%Y")
 
+    # The query parameters for the dashboard
     payload = [
         ("area", f"{area}"),
         ("region", "ALL"),
@@ -25,27 +30,33 @@ def query_dashbaord(area, date_range, date_from, date_to):
         ("dateto", f"{range_end} 23:59")
     ]
 
-    endpoint = "https://www.smartgriddashboard.com/DashboardService.svc/data"
     return requests.get(endpoint, params=payload)
 
 def dashboard_data(*, data_field, date_range=None, date_from=None, date_to=None):
+    # Get the data from the dashboard
     response = query_dashbaord(data_field, date_range, date_from, date_to)
 
+    # If the response was OK return something, else return nothing
     if response:
+        # Unpack the JSON data from the dashboard and pack it into a Pandas DataFram
         data = response.json()
+        # Every response contains a timestamp and a value
         return pd.DataFrame({
             "DateTime" : pd.to_datetime([data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))]),
             data_field : [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))],
         })
     else:
         return None
-    
+
 def mixture(*, date_range=None, date_from=None, date_to=None):
+    # Get the data from the dashboard
     response = query_dashbaord("fuelmix", date_range, date_from, date_to)
 
+    # If the response was OK return something, else return nothing
     if response:
-        # List comprehension
+        # Pack the JSON data into a Pandas DataFrame
         data = response.json()
+        # This dataframe contains the timestamp, the source of the energy and the amount of energy from that source
         return  pd.DataFrame({
             "Time" : [data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))],
             "Source" : [data["Rows"][i]["FieldName"] for i in range(len(data["Rows"]))],
@@ -133,7 +144,7 @@ PBIforecast_days = pd.merge(dem_maxmin_movavg_for_days, wind_maxmin_movavg_for_d
 PBIforecast_days = PBIforecast_days[pd.to_datetime(PBIforecast_days['DateTime']).dt.date >= datetime.date.today()] # filter by days after today
 #endregion
 
-#region find hours data for today and tomorrow 
+#region find hours data for today and tomorrow
 PBIdemand_today = PBIdemand[PBIdemand['DateTime'].dt.date == datetime.date.today()] # filter demand by today's date
 PBIwind_today =  PBIwind[PBIwind['DateTime'].dt.date == datetime.date.today()] # filter wind gen by today's date
 PBIdemand_tomorrow = PBIdemand[PBIdemand['DateTime'].dt.date == datetime.date.today() + datetime.timedelta(days=1)] # filter demand by tomorrow's date
