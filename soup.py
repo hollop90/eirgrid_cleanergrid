@@ -33,8 +33,8 @@ def demand(*, date_range=None, date_from=None, date_to=None):
     if response:
         data = response.json()
         return pd.DataFrame({
-            "Time" : [data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))],
-            "Demand Actual" : [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))],
+            "Time" : [field["EffectiveTime"] for field in data["Rows"]],
+            "Demand Actual" : [field["Value"] for field in data["Rows"]],
         })
     else:
         return None
@@ -58,9 +58,9 @@ def mixture(*, date_range=None, date_from=None, date_to=None):
         # List comprehension
         data = response.json()
         return  pd.DataFrame({
-            "Time" : [data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))],
-            "Source" : [data["Rows"][i]["FieldName"] for i in range(len(data["Rows"]))],
-            "Mixture" : [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))],
+            "Time" : [field["EffectiveTime"] for field in data["Rows"]],
+            "Source" : [field["FieldName"] for field in data["Rows"]],
+            "Mixture" : [field["Value"] for field in data["Rows"]],
         })
     else:
         return None
@@ -71,8 +71,8 @@ def wind(*, date_range=None, date_from=None, date_to=None):
     if response:
         data = response.json()
         return  pd.DataFrame({
-            "Time" : [data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))],
-            "Wind" : [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))],
+            "Time" : [field["EffectiveTime"] for field in data["Rows"]],
+            "Wind" : [field["Value"] for field in data["Rows"]],
         })
     else:
         return None
@@ -83,8 +83,38 @@ def wind_forecast(*, date_range=None, date_from=None, date_to=None):
     if response:
         data = response.json()
         return pd.DataFrame({
-            "Time" : [data["Rows"][i]["EffectiveTime"] for i in range(len(data["Rows"]))],
-            "Forecast" : [data["Rows"][i]["Value"] for i in range(len(data["Rows"]))],
+            "Time" : [field["EffectiveTime"] for field in data["Rows"]],
+            "Forecast" : [field["Value"] for field in data["Rows"]],
         })
     else:
         return None
+
+if __name__ == "__main__":
+    # Wind
+    print(wind_forecast(date_range=3, date_from=None, date_to=None))
+    print(wind(date_range=3, date_from=None, date_to=None))
+
+    # Wind *all*
+    wind_act = wind(date_range=3, date_from=None, date_to=None)
+    wind_for = wind_forecast(date_range=3, date_from=None, date_to=None)
+
+    wind_all = pd.merge(wind_act, wind_for, on="Time", how="outer")
+    wind_all.fillna(0, inplace=True)
+
+    print(wind_all)
+
+    # Fuel mix
+    print(mixture(date_range=3, date_from=None, date_to=None))
+
+    # Demand
+    print(demand(date_range=3, date_from=None, date_to=None))
+    print(demand_forecast(date_range=3, date_from=None, date_to=None))
+
+    # Demand *all*
+    dem_act = demand(date_range=3, date_from=None, date_to=None)
+    dem_for = demand_forecast(date_range=3, date_from=None, date_to=None)
+
+    dem_all = pd.merge(dem_act, dem_for, on="Time", how="outer")
+    dem_all.fillna(0, inplace=True)
+
+    print(dem_all)
