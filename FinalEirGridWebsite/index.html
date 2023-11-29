@@ -1,0 +1,403 @@
+<html>
+    <head>
+        <!-- Including metadata for website -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Connecting the html doc to the stylesheet -->
+        <link rel="stylesheet" href="stylesheet.css">
+        <!-- Primary font used for website -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <header id="header-page">
+
+            <div id="header-section">
+                <div id="header-logo">
+                    <img src="images/eirgrid_logo.png" alt="EirGrid Logo" id="logo">
+                </div>
+                <!-- <div id="header-slogan">Welcome to the EirGrid Interactive Website</div> -->
+                <div id="header-button-container">
+                    <div>
+                        <button class="header-button" id="home-btn">Guide</button>
+                    </div>
+                    <div>
+                        <button class="header-button" id="dashboard-btn">Dashboard</button>
+                    </div>
+                    <div>
+                        <button class="header-button" id="quiz-btn">EirGrid Quiz</button>
+                    </div>
+                    <div>
+                        <button class="header-button" id="energy-btn">Energy Saver</button>
+                    </div>
+                    <div>
+                        <button class="header-button" id="community-btn">Community</button>
+                    </div>
+                </div>
+                
+            </div>
+
+        </header>
+        <main>
+            <!-- Guide Tab Section -->
+            <div class="display-section" id="home-section">
+                <div class="h-container">
+
+                    <h3 id="home-heading">Guide</h3>
+                    <h4 id="guide-heading">This four step guide shows you how to use our dashboard!</h4>
+                    
+                    <div id="guide-steps-container">
+                        <div>
+                            <div class="step-box">
+                                <h3 class="step-box-heading">Step 1</h3>
+                                <div class="img-container"><img src="images/power_bi_logo.png" alt="power bi logo" id="logo1" class="pics"></div>
+                            </div>
+                            <div class="pic-desc">Navigate to Dashboard</div>
+                        </div>
+                        <div>
+                            <div class="step-box">
+                                <h3 class="step-box-heading">Step 2</h3>
+                                <div class="img-container"><img src="images/graph.png" alt="graph picture" id="logo2" class="pics"></div>
+                            </div>
+                            <div class="pic-desc">Analyse the Graphs</div>
+                        </div>
+                        <div>
+                            <div class="step-box">
+                                <h3 class="step-box-heading">Step 3</h3>
+                                <div class="img-container"><img src="images/newgauge.png" alt="consumer meter" id="logo3" class="pics"></div>
+                            </div>
+                            <div class="pic-desc">Observe our Consumeter</div>
+                        </div>
+                        <div>
+                            <div class="step-box">
+                                <h3 class="step-box-heading">Step 4</h3>
+                                <div class="img-container"><img src="images/switch.jpg" alt="switch" id="logo4" class="pics"></div>
+                            </div>
+                            <div class="pic-desc">Reduce your consumption!</div>
+                        </div>
+                        <!-- <div class="step-box"><h3 class="step-box-heading">Step 5</h3></div> -->
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab Section -->
+            <div class="display-section" id="dashboard-section" style="display: none;">
+                <div class="h-container">
+                    <h3 id="dashboard-heading">Dashboard</h3>
+                </div>
+                <div>
+                    <!-- <iframe title="Consumption_Dashboard" width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=c3394b18-c6fa-4060-8faa-986ced57bbfc&autoAuth=true&ctid=766317cb-e948-4e5f-8cec-dabc8e2fd5da" frameborder="0" allowFullScreen="true"></iframe> -->
+                </div>
+            </div>
+
+            <!-- Quiz Tab Section -->
+            <div class="display-section" id="quiz-section" style="display: none;">
+                <div class="h-container">
+                    <h3 id="quiz-heading">Eirgrid Interactive Quiz</h3>
+                </div>
+                <div id="p-container" class="paragraph">
+                    <p class="info">The EirGrid Interactive Quiz aims to encourage users to actively reduce their energy consumption
+                        by providing tips and advice about electricity usage, energy conservation, and community involvement in energy reduction. 
+                        By taking this quiz you are making the first step in improving your knowledge of the energy consumption in your home.
+                    </p>
+                </div>
+                <div id="btn-container">
+                    <button id="start-quiz-btn" class="start-button">Play</button>
+                </div>
+            </div>
+            
+            <!-- Quiz Results Popup Box -->
+            <dialog id="quiz-results-container" class="pop-up-box">
+                <div id ="score-container">
+                    <div id="results-heading">
+                        <h3 id="quiz-results-heading">Quiz Results</h3>
+                    </div>
+
+                    <div class="score-message">Here are your results!</div>
+                    <div id="score-number" class="score-message"></div>
+                        <button id="close-score-btn" type="button" aria-label="close" class="close-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" class="game icon svg-icon" data-testid="icon close">
+                                <path fill="var(--color-tone-1)" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" id="path-id"></path>
+                            </svg>
+                        </button>
+                    <div id="continue-button-container">
+                        <button id="continue-btn" class="continue-button">Continue</button>
+                    </div>
+                </div>
+            </dialog>
+
+            <!-- Displaying Quiz Questions -->
+            <div class="display-section" id="display-question" style="display: none;">
+                <h4 id = "question-number">Question 1</h4>
+                <div id="question-container"></div>
+                <div id="answer-container">
+                    <button class ="answer-btn" id="answer-one"></button>
+                    <button class ="answer-btn" id="answer-two"></button>
+                    <button class ="answer-btn" id="answer-three"></button>
+                    <button class ="answer-btn" id="answer-four"></button>
+                    <button class ="answer-btn" id="next-question">Next Question</button>
+                    <div id="q-number"></div>
+                </div>
+            </div>
+
+            <!-- Energy Tab Section -->
+            <div class="display-section" id="energy-section" style="display: none;">
+                <div class="h-container">
+                    <h3 id="energy-heading">Energy Saver</h3>
+                </div>
+                <div class="paragraph"><p class="info">EirGrid would like to help citizens to be
+                    more mindful of their energy consumption and even help them save some money along the way! The EirGrid Energy Saver does exactly this by providing consumers with an accurate analysis of their energy bills. It also shows you how you can save money by shifting your energy usage to a different time of the day. The steps are simple and are outlined below.
+                </p>
+                <ul id="step-list">
+                    <li class="list-item">Select the amount of energy rates with your plan (1, 2, or 3).</li>
+                    <li class="list-item">Enter the cost of each rate.</li>
+                    <li class="list-item">If you are on more than one rate, select your peak rate last.</li>
+                    <li class="list-item">Specify the energy consumed at each rate.</li>
+                    <li class="list-item">Finish the analysis to see how much money you could save!</li>
+                </ul>
+                </div>
+                <div>
+                    <button id="start-energy-analysis" class="start-button">Start</button>
+                </div>
+            </div>
+
+            <div class="display-section" id="display-analysis" style="display: none;">
+                <div id="first-step" class="steps">
+                    <h4 id="step-number-one" class="step-heading">Step 1</h4>
+                    <div id="rate-selection">
+                        <div id="instruction">Select the amount of rates with your plan</div>
+                        <div id="dropdown-div">
+                            <div class="dropdown">
+                                    <select id="selectbox" onchange="updateInputBoxes()">
+                                        <option class="options" value="1">1</option>
+                                        <option class="options" value="2">2</option>
+                                        <option class="options" value="3">3</option>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="second-step" class="steps">
+
+                    <h4 id="step-number-two" class="step-heading">Step 2</h4>
+                    <div id="step-two-title">Enter the value of each rate (in cents)</div>
+                    <div id="rates-link">You can access Electric Ireland's various price plans <a href="https://www.electricireland.ie/switch/new-customer/price-plans?priceType=E" target="_blank">here</a></div>
+                    <div class="input-container" id="rate-cost-1">
+                        <div class="display-inputs">
+                            <div class="input-line">
+                                <div class="which-rate">Cost of Rate 1</div>
+                                <div>
+                                    <input class="input-box" type="text" id="rate-cost-1_1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-container" id="rate-cost-2" style="display: none;">
+                        <div class="display-inputs">
+                            <div class="input-line">
+                                <div class="which-rate">Cost of Rate 1</div>
+                                <div>
+                                    <input class="input-box" type="text" id="rate-cost-2_1">
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="which-rate">Cost of Rate 2</div>
+                                <div>
+                                    <input class="input-box" type="text" id="rate-cost-2_2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-container" id="rate-cost-3" style="display: none;">
+                        <div class="display-inputs">
+                            <div class="input-line">
+                                <div class="which-rate">Cost of Rate 1</div>
+                                <div>
+                                    <input class="input-box" type="text" id="rate-cost-3_1">
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="which-rate">Cost of Rate 2</div>
+                                <div>
+                                    <input class="input-box" type="text" id="rate-cost-3_2">
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="which-rate">Cost of Rate 3</div>
+                                <div>
+                                    <input class="input-box" type="text" id="rate-cost-3_3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="third-step" class="steps">
+
+                    <h4 id="step-number-three" class="step-heading">Step 3</h4>
+                    <div id="step-two-title">Enter the energy consumed at each rate (in kW/h)</div>
+                    <div class="average-info">The average household in Ireland consumes 4,200 kW/h of energy anually</div>
+                    <div class="average-info">This is equivalent to &euro;1909!</div>
+                    <div class="input-container" id="energy-rate-1">
+                        <div class="display-inputs">
+                            <div class="input-line">
+                                <div class="which-rate1">Energy Consumed at Rate 1</div>
+                                <div>
+                                    <input class="input-box" type="text" id="energy-rate-1_1">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="finish-btn">Finish</button>
+                        </div>
+                    </div>
+                    <div class="input-container" id="energy-rate-2" style="display: none;">
+                        <div class="display-inputs">
+                            <div class="input-line">
+                                <div class="which-rate1">Energy Consumed at Rate 1</div>
+                                <div>
+                                    <input class="input-box" type="text" id="energy-rate-2_1">
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="which-rate1">Energy Consumed at Rate 2</div>
+                                <div>
+                                    <input class="input-box" type="text" id="energy-rate-2_2">
+                                </div>
+                            </div>
+                            
+                            <button class="finish-btn">Finish</button>
+                            
+                        </div>
+                    </div>
+                    <div class="input-container" id="energy-rate-3" style="display: none;">
+                        <div class="display-inputs">
+                            <div class="input-line">
+                                <div class="which-rate1">Energy Consumed at Rate 1</div>
+                                <div>
+                                    <input class="input-box" type="text" id="energy-rate-3_1">
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="which-rate1">Energy Consumed at Rate 2</div>
+                                <div>
+                                    <input class="input-box" type="text" id="energy-rate-3_2">
+                                </div>
+                            </div>
+                            <div class="input-line">
+                                <div class="which-rate1">Energy Consumed at Rate 3</div>
+                                <div>
+                                    <input class="input-box" type="text" id="energy-rate-3_3">
+                                </div>
+                            </div>
+                            <button class="finish-btn">Finish</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <dialog id="analysis-results-dialog" class="pop-up-box">
+                <div class="e-saver-container">
+                    <div><h3 id="analysis-results-heading">Energy Saver Results</h3></div>
+                    <button id="close-saver-btn" type="button" aria-label="close" class="close-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" class="game icon svg-icon" data-testid="icon close">
+                            <path fill="var(--color-tone-1)" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" id="path-id"></path>
+                        </svg>
+                    </button>
+                    <div><h4 class="d-heading">Cost</h4></div>
+                    <div class="dialog-container" id="cost"></div>
+                    <div><h4 class="d-heading">Enery Consumed</h4></div>
+                    <div class="dialog-container" id="energy"></div>
+                    <div><h4 class="d-heading">Potential Savings</h4></div>
+                    <div id="savings"></div>
+                    <div class="dialog-container"><button id="continue-btn-2" class="continue-button">Continue</button></div>
+                </div>
+            </dialog>
+
+            <!-- Community Tab Secton -->
+            <div class="display-section" id="community-section" style="display: none;">
+                <div class="h-container">
+                    <h3 id="community-heading">Community</h3>
+                    <div id="community-description"><p class="info">The EirGrid Energy Saver Community provides a platform for consumers to share their
+                        personal experiences with energy conservation and gives them the opporunity to exchange tips and advice on energy reduction.
+                        Consumers can subscribe to their local area/county and publish a post to an MQTT broker for other users to see. You can view other peoples posts
+                        by going to the Hive MQTT Broker website and subscribing to your area.
+                    </p></div>
+                    <h4 class="comm-h">Step 1</h4>
+                    <div>Connect to the MQTT Broker</div>
+                    <button id = "connect" onclick="connectToBroker()" class="community-btn">Connect To Broker</button>
+                    
+                    <h4 class="comm-h">Step 2</h4>
+                    <div id="comm-div-1">Enter your local area/county</div>
+                    <input type="text" id="area" class="comm-input" placeholder="Select your area...">
+                    <div id="comm-div-2">Publish your Message!</div>
+                    <input type="text" id="message" class="comm-input" placeholder="Type your message...">
+                    <button onclick="publishMessage()" id="publish-btn" class="community-btn">Publish</button>
+
+                    <h4 class="comm-h">Step 3</h4>
+                    <div id="mqtt-heading">Messsages from the MQTT Broker will appear below when you subscribe to your area!</div> 
+                    <button id = "subscribe" onclick="subscribeToMessages()" class="community-btn">Subscribe</button>
+                    <div id="mqtt-message-container">
+                        <div id="mqtt-messages"></div>
+                    </div>
+                    <h4 class="comm-h">Step 4</h4>
+                    <div id="disconnect-message">Disconnect from the Broker when you are finished</div>
+                    <button id = "disconnect" onclick="disconnectFromBroker()" class="community-btn">Disconnect</button>  
+                    
+
+                    
+                </div>
+            </div>
+                
+        </main>
+
+        <!-- Footer Section -->
+        <footer id="footer">
+            <div class="container">
+                <div class="footer-container">
+                    <div class="footer-item">
+                        <h4 class="footer-headings">Services</h4>
+                        <div>
+                            <div><a href="#">Projects</a></div>
+                            <div><a href="#">Development</a></div>
+                            <div><a href="#">Training</a></div>
+                        </div>
+                    </div>
+                    <div class="footer-item">
+                        <h4 class="footer-headings">About</h4>
+                        <div>
+                            <div><a href="#">Company</a></div>
+                            <div><a href="#">Team</a></div>
+                            <div><a href="#">Legacy</a></div>
+                        </div>
+                    </div>
+                    <div class="footer-item">
+                        <h4 class="footer-headings">Careers</h4>
+                        <div>
+                            <div><a href="#">Job openings</a></div>
+                            <div><a href="#">Employee success</a></div>
+                            <div><a href="#">Benefits</a></div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="col-lg-3 item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a>
+                    <div class="copyright-text">
+                        <p class="copyright">EirGrid Group © 2006</p>
+                    </div>
+                </div>
+                
+            </div>
+        </footer>
+        
+        <script src="script.js" type="module"></script>
+        <script src="new-paho.js" ></script>
+        <script src="script-mqtt-broker.js"></script>
+        
+    </body>
+</html>
