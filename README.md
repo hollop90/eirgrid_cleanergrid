@@ -1,5 +1,7 @@
 # EirGrid CleanerGrid: Team Guinness
 
+Team members: Jack Brady, Aleksandra Dozorova, Ugochukwu Uzoukwu
+
 Video: https://youtu.be/Wk_6pP8eu84?si=czIEl17lMQ23Qwo4
 
 Website: https://cerulean-kheer-2bbfb0.netlify.app/
