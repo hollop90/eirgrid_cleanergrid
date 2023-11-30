@@ -1,10 +1,10 @@
-# EirGrid CleanerGrid: Team Guiness
+# EirGrid CleanerGrid: Team Guinness
 
 data_collection
 
     Python scripts for collecting dashboard and semopx data
 
-website
+FinalEirgridWebsite
 
     Source code for website
 
@@ -15,7 +15,3 @@ power_bi
 report
 
     Written project report
-
-hardware
-
-    Desktop dashboard files
