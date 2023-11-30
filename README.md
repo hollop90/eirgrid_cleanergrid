@@ -11,7 +11,3 @@ FinalEirgridWebsite
 power_bi
 
     PowerBI dashboard
-
-report
-
-    Written project report
